@@ -3,6 +3,13 @@
 const game = document.querySelector("#game");
 const character = document.querySelector("#character");
 const mouse = document.querySelector("#mouse");
+const startButton = document.querySelector("#start-button");
+
+const triedFeet = {
+  left: false,
+  right: false
+};
+
 const instruction = document.querySelector("#instruction");
 
 const states = {
@@ -76,6 +83,18 @@ function takeStep(side) {
         : "Right step — now try the left.";
   }
 
+// Unlock exploration after both controls have been practised.
+triedFeet[side] = true;
+
+if (triedFeet.left && triedFeet.right) {
+  startButton.hidden = false;
+
+  if (side !== lastSide) {
+    instruction.textContent =
+      "You have tried both feet! Click Start walking.";
+  }
+}
+
   lastSide = side;
 
   resetTimer = window.setTimeout(resetPose, poseDuration);
@@ -116,4 +135,13 @@ game.addEventListener("contextmenu", (event) => {
 window.addEventListener("blur", () => {
   window.clearTimeout(resetTimer);
   resetPose();
+});
+
+// Keep interface clicks separate from walking input.
+startButton.addEventListener("mousedown", (event) => {
+  event.stopPropagation();
+});
+
+startButton.addEventListener("click", () => {
+  window.location.href = "./walk.html";
 });

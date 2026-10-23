@@ -117,3 +117,32 @@ body {
   line-height: 1;
   pointer-events: none;
 }
+
+#start-button:hover {
+  background: #e4edcd;
+}
+
+#start-button:focus-visible {
+  outline: 3px solid #525c3e;
+  outline-offset: 4px;
+}
+
+#start-button[hidden] {
+  display: none;
+}
+
+/* Position the start button at the bottom-right. */
+#start-button {
+  position: absolute;
+  z-index: 6;
+  bottom: 5%;
+  right: 5%;
+  padding: 10px 24px;
+  border: 2px solid #454936;
+  border-radius: 16px 12px 15px 11px;
+  background: #fff8e6;
+  color: #303026;
+  font-family: inherit;
+  font-size: clamp(18px, 2vw, 26px);
+  cursor: pointer;
+}
