@@ -270,3 +270,112 @@ body {
 #collected-camera[hidden] {
   display: none;
 }
+
+/*
+  A warm paper frame connects the photograph to the hand-drawn scene.
+  The modal sits above the game without changing its layout.
+*/
+#frog-photo {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+
+  width: min(86vw, 580px);
+  max-width: none;
+  max-height: 90vh;
+  margin: auto;
+  padding: 0;
+
+  overflow: auto;
+  border: 0;
+  background: transparent;
+  color: #303026;
+  font: inherit;
+}
+
+/* Keep the dialog hidden until JavaScript calls showModal(). */
+#frog-photo:not([open]) {
+  display: none;
+}
+
+#frog-photo::backdrop {
+  background: rgba(36, 42, 29, 0.55);
+}
+
+.photo-card {
+  padding: 16px 16px 20px;
+  border: 2px solid #62684b;
+  border-radius: 5px 8px 6px 4px;
+  background: #fff8e6;
+  text-align: center;
+}
+
+/*
+  Enlarge the grass texture to suggest a close view of the ground.
+  The frog stays proportional and remains the photograph's main subject.
+*/
+.photo-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+
+  background-color: #b9cf77;
+  background-image: url("./images/草地(2).png");
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Enlarge the grass texture to create a closer view around the frog. */
+  background-size: 200% auto;
+  background-position: center;
+
+  border: 1px solid rgba(70, 80, 48, 0.25);
+}
+
+.photo-frog {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+
+  display: block;
+  width: 64%;
+  height: 72%;
+  max-width: none;
+  object-fit: contain;
+
+  transform: translate(-50%, -50%) rotate(-3deg);
+  pointer-events: none;
+}
+
+#frog-photo-title {
+  margin: 14px 0 4px;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.photo-card p {
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+#close-photo {
+  padding: 8px 24px;
+  border: 2px solid #62684b;
+  border-radius: 12px 9px 13px 10px;
+
+  background: #e4edcd;
+  color: inherit;
+  font: inherit;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#close-photo:hover {
+  background: #d3e1b5;
+}
+
+#close-photo:focus-visible {
+  outline: 3px solid #525c3e;
+  outline-offset: 4px;
+}

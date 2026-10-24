@@ -508,22 +508,99 @@ radioControl.addEventListener("click", async (event) => {
   }
 });
 
+const photoDialog = document.querySelector("#frog-photo");
+const closePhotoButton = document.querySelector("#close-photo");
+
+let photoPending = false;
+let photoTimer = null;
+
+/*
+  Delay the photograph by one second to separate the shutter action
+  from discovering the frog. Ignore extra clicks during this delay
+  so repeated input cannot create several pending photographs.
+  Reference:
+  https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout
+*/
 cameraControl.addEventListener("click", (event) => {
   event.stopPropagation();
 
-  cameraSound.currentTime = 0;
+  if (photoPending || photoDialog.open) return;
 
+  photoPending = true;
+  pauseGrassSound();
+
+  cameraSound.currentTime = 0;
   cameraSound.play().catch((error) => {
     if (error.name !== "AbortError") {
-      reportAudioError("Camera sound", error);
-
-      showNotice(
-        "Camera sound could not play. Please check the audio file."
-      );
+      console.warn("Camera sound could not play:", error);
     }
   });
 
-  showNotice("Click! You used the camera.");
+  showNotice("Looking a little closer...");
+
+  photoTimer = window.setTimeout(() => {
+    photoTimer = null;
+    photoPending = false;
+
+    if (document.hidden) return;
+
+    /*
+      showModal places the photograph above the page and blocks
+      interaction with the walking scene until the photo is closed.
+      Reference:
+      https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal
+    */
+    photoDialog.showModal();
+  }, 1000);
+});
+
+closePhotoButton.addEventListener("click", () => {
+  photoDialog.close();
+});
+
+/*
+  Close only when clicking outside the photo's visible bounds.
+  Clicking the frog or the paper frame keeps the photograph open.
+*/
+photoDialog.addEventListener("click", (event) => {
+  if (event.target !== photoDialog) return;
+
+  const bounds = photoDialog.getBoundingClientRect();
+
+  const clickedOutside =
+    event.clientX < bounds.left ||
+    event.clientX > bounds.right ||
+    event.clientY < bounds.top ||
+    event.clientY > bounds.bottom;
+
+  if (clickedOutside) {
+    photoDialog.close();
+  }
+});
+
+photoDialog.addEventListener("mousedown", (event) => {
+  event.stopPropagation();
+});
+
+photoDialog.addEventListener("contextmenu", (event) => {
+  event.preventDefault();
+});
+
+photoDialog.addEventListener("close", () => {
+  showNotice("A little frog! Keep walking when you are ready.");
+});
+
+/* Cancel an unfinished photo when the player leaves the page. */
+function cancelPendingPhoto() {
+  window.clearTimeout(photoTimer);
+  photoTimer = null;
+  photoPending = false;
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    cancelPendingPhoto();
+  }
 });
 
 // ---------- Foot movement and surface detection ----------

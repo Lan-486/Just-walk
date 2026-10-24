@@ -110,6 +110,31 @@
     <p id="walk-status" role="status" aria-live="polite">
       Alternate left and right clicks to walk.
     </p>
+
+    <!--
+  A separate photo view gives the player time to notice the frog.
+  The modal prevents clicks on the photograph from triggering footsteps.
+-->
+<dialog id="frog-photo" aria-labelledby="frog-photo-title">
+  <div class="photo-card">
+    <div class="photo-scene">
+      <img
+        class="photo-frog"
+        src="./images/青蛙.png"
+        alt="A little frog hiding in the grass"
+        draggable="false"
+      >
+    </div>
+
+    <h2 id="frog-photo-title">A little discovery</h2>
+    <p>A quiet friend hiding in the grass.</p>
+
+    <button id="close-photo" type="button">
+      Keep walking
+    </button>
+  </div>
+</dialog>
+
   </main>
 </body>
 </html>
