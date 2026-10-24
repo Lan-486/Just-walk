@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Just Walk — Explore</title>
+
+  <link rel="stylesheet" href="./reset.css">
+  <link rel="stylesheet" href="./walk.css">
+
+  <script src="./walk.js" defer></script>
+</head>
+
+<body>
+  <main class="walk-page">
+    <!-- First-person feet connect mouse clicks to walking. -->
+    <section
+      id="walk-game"
+      aria-label="First-person walking experience"
+      aria-describedby="walk-status"
+    >
+      <!-- Scenery and uncollected objects move together during a stumble. -->
+      <div id="walk-world">
+        <div id="ground" aria-hidden="true"></div>
+
+        <img
+          id="puddle"
+          src="./images/水洼(1).png"
+          alt=""
+          draggable="false"
+        >
+
+        <img
+          id="left-foot"
+          class="foot"
+          src="./images/左脚.png"
+          alt="Red left foot"
+          draggable="false"
+        >
+
+        <img
+          id="right-foot"
+          class="foot"
+          src="./images/右脚.png"
+          alt="Blue right foot"
+          draggable="false"
+        >
+
+        <button
+          id="radio-pickup"
+          class="world-item"
+          type="button"
+          hidden
+        >
+          <img
+            src="./images/收音机.png"
+            alt="Pick up the radio"
+            draggable="false"
+          >
+        </button>
+
+        <button
+          id="camera-pickup"
+          class="world-item"
+          type="button"
+          hidden
+        >
+          <img
+            src="./images/相机.png"
+            alt="Pick up the camera"
+            draggable="false"
+          >
+        </button>
+      </div>
+
+      <!-- Interface elements remain stable outside the moving world. -->
+      <h1 class="walk-title">Just Walk</h1>
+
+      <a id="back-link" href="./index.html">
+        Back to tutorial
+      </a>
+
+      <!-- Collected objects stay accessible in the bottom-right corner. -->
+      <div id="inventory" aria-label="Collected items">
+        <button
+          id="radio-control"
+          type="button"
+          aria-label="Play radio music"
+          aria-pressed="false"
+          hidden
+        >
+          <img
+            src="./images/收音机.png"
+            alt=""
+            draggable="false"
+          >
+        </button>
+
+        <img
+          id="collected-camera"
+          src="./images/相机.png"
+          alt="Collected camera"
+          draggable="false"
+          hidden
+        >
+      </div>
+    </section>
+
+    <p id="walk-status" role="status" aria-live="polite">
+      Alternate left and right clicks to walk.
+    </p>
+  </main>
+</body>
+</html>

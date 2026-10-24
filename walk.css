@@ -1,0 +1,272 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: #eeeadd;
+  color: #303026;
+  font-family: "Patrick Hand", cursive;
+}
+
+.walk-page {
+  width: min(100%, 1200px);
+}
+
+#walk-game {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  isolation: isolate;
+  user-select: none;
+}
+
+/*
+  Repeating one painting reduces artwork while suggesting an endless path.
+  https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat
+*/
+#ground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: #b9cf77;
+  background-image: url("./images/草地(2).png");
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  background-position: center 0;
+  pointer-events: none;
+}
+
+.walk-title {
+  position: absolute;
+  z-index: 3;
+  top: 4%;
+  left: 5%;
+  margin: 0;
+  font-size: clamp(36px, 6vw, 76px);
+  font-weight: 400;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Hide the leg ends below the frame to maintain the first-person illusion. */
+.foot {
+  position: absolute;
+  z-index: 2;
+  bottom: -14%;
+  width: auto;
+  height: 57%;
+  max-width: none;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+#left-foot {
+  right: 25%;
+}
+
+#right-foot {
+  left: 25%;
+}
+
+#back-link {
+  position: absolute;
+  z-index: 4;
+  top: 5%;
+  right: 4%;
+  padding: 8px 14px;
+  border: 1px solid #525c3e;
+  border-radius: 12px;
+  background: #fff8e6;
+  color: #303026;
+  font-size: clamp(14px, 1.6vw, 22px);
+  text-decoration: none;
+}
+
+#back-link:hover {
+  background: #e4edcd;
+}
+
+#back-link:focus-visible {
+  outline: 3px solid #525c3e;
+  outline-offset: 4px;
+}
+
+#walk-status {
+  min-height: 1.5em;
+  margin-top: 12px;
+  text-align: center;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.5;
+}
+
+/*
+  Match the grass width while preserving the painting's proportions.
+  Water effects remain beneath the feet so they feel grounded.
+*/
+#puddle {
+  position: absolute;
+  z-index: 1;
+  top: 12%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+#water-effects {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.water-ripple {
+  position: absolute;
+  width: 54px;
+  height: 24px;
+  border: 1.5px solid rgba(229, 243, 239, 0.6);
+  border-radius: 46% 54% 43% 57%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+  Group the scenery and feet so a stumble shakes the viewpoint.
+  Interface elements remain outside this moving layer.
+*/
+#walk-world {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform-origin: center;
+}
+
+/* Hide water until JavaScript positions it beyond the scene. */
+#puddle {
+  visibility: hidden;
+}
+
+/*
+  Objects share the moving world, while collected items remain
+  fixed in the interface for easy access.
+*/
+.world-item {
+  position: absolute;
+  z-index: 3;
+  width: 14%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.world-item img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+#radio-pickup {
+  left: 34%;
+}
+
+#camera-pickup {
+  left: 57%;
+}
+
+.world-item:hover img {
+  filter: brightness(1.12);
+}
+
+#inventory {
+  position: absolute;
+  z-index: 6;
+  right: 4%;
+  bottom: 4%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+
+/*
+  Matching slots make collected objects feel like one inventory.
+  Grid centres both illustrations inside equally sized buttons.
+  Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/place-items
+*/
+#inventory {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#radio-control,
+#camera-control {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+
+  width: clamp(64px, 9vw, 110px);
+  height: auto;
+  aspect-ratio: 1;
+  padding: 10px;
+  margin: 0;
+
+  appearance: none;
+  border: 2px solid #62684b;
+  border-radius: 15px 12px 16px 13px;
+  background: #fff8e6;
+
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/*
+  Contain preserves each drawing's proportions without stretching it.
+  Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit
+*/
+#radio-control img,
+#camera-control img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+#radio-control:hover,
+#camera-control:hover {
+  background: #e4edcd;
+}
+
+#radio-control:focus-visible,
+#camera-control:focus-visible {
+  outline: 3px solid #525c3e;
+  outline-offset: 4px;
+}
+
+/* A warm glow communicates that the radio is currently playing. */
+#radio-control.is-playing {
+  background: #f8efbc;
+  box-shadow: 0 0 18px rgba(244, 210, 98, 0.75);
+}
+
+#radio-control.is-playing img {
+  filter: drop-shadow(0 0 5px rgba(244, 210, 98, 0.8));
+}
+
+/* Explicitly keep uncollected items hidden despite display: grid. */
+#radio-control[hidden],
+#camera-control[hidden],
+#collected-camera[hidden] {
+  display: none;
+}
