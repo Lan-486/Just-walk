@@ -527,6 +527,15 @@ cameraControl.addEventListener("click", (event) => {
   if (photoPending || photoDialog.open) return;
 
   photoPending = true;
+  /*
+  Restart the flash on each accepted camera click.
+  Reading offsetWidth applies the removed class before adding it again,
+  allowing the same CSS animation to replay.
+  */
+  cameraControl.classList.remove("is-flashing");
+  void cameraControl.offsetWidth;
+  cameraControl.classList.add("is-flashing");
+
   pauseGrassSound();
 
   cameraSound.currentTime = 0;

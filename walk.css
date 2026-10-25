@@ -181,28 +181,30 @@ body {
   filter: brightness(1.12);
 }
 
+/*
+  Spread collected items across the bottom of the scene.
+  Empty space between the buttons still accepts walking clicks.
+*/
 #inventory {
   position: absolute;
   z-index: 6;
+  left: 4%;
   right: 4%;
   bottom: 4%;
+
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
+
+  pointer-events: none;
 }
-
-
 
 /*
   Matching slots make collected objects feel like one inventory.
   Grid centres both illustrations inside equally sized buttons.
   Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/place-items
 */
-#inventory {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
 
 #radio-control,
 #camera-control {
@@ -378,4 +380,123 @@ body {
 #close-photo:focus-visible {
   outline: 3px solid #525c3e;
   outline-offset: 4px;
+}
+
+/* Keep both inventory buttons clickable. */
+#radio-control,
+#camera-control {
+  pointer-events: auto;
+}
+
+/* Keep the camera on the right even when the radio is hidden. */
+#camera-control {
+  margin-left: auto;
+}
+
+/*
+  Position decorative effects around each inventory button.
+  They ignore pointer input so they cannot interrupt clicks.
+*/
+#radio-control,
+#camera-control {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+/*
+  Expanding, slightly uneven rings suggest the radio's sound waves.
+  The existing is-playing class connects the effect to music playback.
+  Reference:
+  https://developer.mozilla.org/en-US/docs/Web/CSS/::after
+*/
+#radio-control::before,
+#radio-control::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+
+  border: 2px solid #d2a348;
+  border-radius: 43% 57% 49% 51% / 55% 44% 56% 45%;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+#radio-control.is-playing::before,
+#radio-control.is-playing::after {
+  animation: radio-wave 1.8s ease-out infinite;
+}
+
+#radio-control.is-playing::after {
+  animation-delay: 0.9s;
+}
+
+@keyframes radio-wave {
+  from {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/*
+  A small warm burst confirms the shutter action without
+  flashing the whole screen or covering the walking scene.
+*/
+#camera-control::after {
+  content: "";
+  position: absolute;
+  inset: -24%;
+  z-index: -1;
+
+  background: #ffe2a0;
+  clip-path: polygon(
+    50% 0%, 59% 29%, 83% 10%, 75% 38%,
+    100% 47%, 76% 57%, 93% 83%, 62% 73%,
+    51% 100%, 40% 75%, 12% 91%, 25% 61%,
+    0% 49%, 28% 39%, 13% 13%, 41% 28%
+  );
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+#camera-control.is-flashing::after {
+  animation: camera-flash 350ms ease-out;
+}
+
+@keyframes camera-flash {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  20% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+/*
+  Preserve the existing radio glow while removing animated effects
+  for players who request reduced motion.
+  Reference:
+  https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+*/
+@media (prefers-reduced-motion: reduce) {
+  #radio-control.is-playing::before,
+  #radio-control.is-playing::after,
+  #camera-control.is-flashing::after {
+    animation: none;
+  }
 }
