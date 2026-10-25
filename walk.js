@@ -172,7 +172,7 @@ function announceVisibleCollectible() {
   Resume the long recording instead of restarting it with every click.
   Its background birds pause together with the recorded footsteps.
 */
-const grassSound = new Audio("./audio/脚步声.wav");
+const grassSound = new Audio("./audio/grass-footsteps.wav");
 grassSound.preload = "auto";
 grassSound.loop = true;
 grassSound.volume = 0.45;
@@ -191,7 +191,7 @@ let grassShouldPlay = false;
   Three players allow one short splash to finish while another begins.
 */
 const waterSounds = Array.from({ length: 3 }, () => {
-  const sound = new Audio("./audio/水声.wav");
+  const sound = new Audio("./audio/water-step.wav");
   sound.preload = "auto";
   sound.loop = false;
   sound.volume = 0.6;
@@ -211,7 +211,7 @@ let nextWaterSound = 0;
   Playback loops at a reduced volume. Credit the creator and licence
   in the page's visible credits as well as these code comments.
 */
-const radioMusic = new Audio("./audio/音乐.wav");
+const radioMusic = new Audio("./audio/radio-music.wav");
 radioMusic.preload = "auto";
 radioMusic.loop = true;
 radioMusic.volume = 0.35;
@@ -228,7 +228,7 @@ let musicRequested = false;
 
   A short shutter sound confirms the camera click.
 */
-const cameraSound = new Audio("./audio/拍照.wav");
+const cameraSound = new Audio("./audio/camera-shutter.wav");
 cameraSound.preload = "auto";
 cameraSound.loop = false;
 cameraSound.volume = 0.3;

@@ -14,20 +14,20 @@ const instruction = document.querySelector("#instruction");
 
 const states = {
   idle: {
-    character: "./images/角色站.png",
-    mouse: "./images/鼠标.png",
+    character: "./images/character-idle.png",
+    mouse: "./images/mouse-idle.png",
     description: "Character standing with both feet on the ground"
   },
 
   left: {
-    character: "./images/角色左.png",
-    mouse: "./images/鼠标左.png",
+    character: "./images/character-left.png",
+    mouse: "./images/mouse-left.png",
     description: "Character lifting the left foot"
   },
 
   right: {
-    character: "./images/角色右.png",
-    mouse: "./images/鼠标右.png",
+    character: "./images/character-right.png",
+    mouse: "./images/mouse-right.png",
     description: "Character lifting the right foot"
   }
 };

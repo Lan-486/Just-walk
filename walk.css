@@ -32,7 +32,7 @@ body {
   inset: 0;
   z-index: 0;
   background-color: #b9cf77;
-  background-image: url("./images/草地(2).png");
+  background-image: url("./images/grass.png");
   background-size: 100% auto;
   background-repeat: repeat-y;
   background-position: center 0;
@@ -321,7 +321,7 @@ body {
   overflow: hidden;
 
   background-color: #b9cf77;
-  background-image: url("./images/草地(2).png");
+  background-image: url("./images/grass.png");
   background-repeat: no-repeat;
   background-position: center;
   /* Enlarge the grass texture to create a closer view around the frog. */
