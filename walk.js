@@ -927,3 +927,19 @@ document.addEventListener("visibilitychange", () => {
     stopAllSounds();
   }
 });
+
+/*
+  I experimented with using the duration of left and right mouse
+  button presses to control step size. Holding a button longer
+  produced a larger step, while a quick click produced a smaller one.
+
+  However, the result did not feel as natural as I expected.
+  The background movement became less smooth, and the relationship
+  between holding, releasing and stepping felt awkward.
+
+  I returned to a fixed distance for each click because it made
+  the walking rhythm clearer and the visual feedback more consistent.
+  In a future version, I would explore smoother transitions between
+  different step sizes while keeping alternating clicks as the
+  main interaction.
+*/
